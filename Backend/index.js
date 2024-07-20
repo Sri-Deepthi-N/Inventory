@@ -61,7 +61,7 @@ const purchaseSchema= new mongoose.Schema({
     billingaddress:{type:String,required:true},
     shippingaddress:{type:String,required:true},
     shippingmethod:{type:String,required:true},
-    preferredshippingdate:{type:String,required:true},
+    preferredshippingdate:{type:Date,required:true},
 })
 
 let Purchases =mongoose.model("purchaseorder",purchaseSchema)
@@ -82,15 +82,15 @@ app.post('/purchaseorder',async(req,res)=>{
 //salesorder
 const salesSchema= new mongoose.Schema({
   warehouse:{type:String,required:true},
-  salesorder:{type:String,required:true},
+  salesorder:{type:Number,required:true},
   responsivesalesperson:{type:String,required:true},
   customer:{type:String,required:true},
   contactperson:{type:String,required:true},
   billingaddress:{type:String,required:true},
   shippingaddress:{type:String,required:true},
   shippingmethod:{type:String,required:true},
-  preferredshippingdate:{type:String,required:true},
-  paymentterms:{type:String,required:true},
+  preferredshippingdate:{type:Date,required:true},
+  paymentterms:{type:Date,required:true},
 })
 
 let Sales =mongoose.model("salesorder",salesSchema)
@@ -109,11 +109,11 @@ app.post('/salesorder',async(req,res)=>{
 
 //product
 const productSchema= new mongoose.Schema({
-  photo:{type:String,required:true},
+  photo:{type:Image,required:true},
   name:{type:String,required:true},
-  productid:{type:String,required:true},
-  price:{type:String,required:true},
-  quantity:{type:String,required:true},
+  productid:{type:Number,required:true},
+  price:{type:Number,required:true},
+  quantity:{type:Number,required:true},
   
 })
 
@@ -145,3 +145,15 @@ app.get("/address",async(req,res) =>{
   const warehouse=await Warehouse.find();
   res.json(warehouse)
 })
+
+//SalesPreson
+const SalespersonSchema=new mongoose.Schema({
+  name:{type:String,required:true},
+})
+
+let SalesPerson =mongoose.model("salesperson",SalespersonSchema);
+
+app.get("/salesperson",async(req,res) =>{
+  const salesperson=await SalesPerson.find();
+  res.json(salesperson)
+}) 
